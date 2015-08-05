@@ -375,7 +375,7 @@
   dominant-baseline: central;
 }
 .the-graph-dark .node-icon {
-  font-size: 45px;
+  font-size: 10px;
   fill: #5e6a6e;
   transition-property: font-size, fill;
   transition-duration: 0.5s, 0.3s;

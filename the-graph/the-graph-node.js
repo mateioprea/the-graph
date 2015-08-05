@@ -306,6 +306,7 @@
         graphView: this.props.graphView,
         node: this,
         icon: this.props.icon,
+        title: this.props.title,
         ports: ports,
         process: this.props.node,
         processKey: processKey,
@@ -330,6 +331,7 @@
         nextProps.x !== this.props.x || 
         nextProps.y !== this.props.y ||
         nextProps.icon !== this.props.icon ||
+        nextProps.title !== this.props.title ||
         nextProps.label !== this.props.label ||
         nextProps.sublabel !== this.props.sublabel ||
         nextProps.ports !== this.props.ports ||
@@ -423,12 +425,9 @@
         };
         return TheGraph.factories.node.createNodePort(props);
       });
-
+        console.log(this.props);
       // Node Icon
-      var icon = TheGraph.FONT_AWESOME[ this.props.icon ];
-      if (!icon) {
-        icon = TheGraph.FONT_AWESOME.cog;
-      }
+      var icon = this.props.title;
 
       var iconContent;
       if (this.props.iconsvg && this.props.iconsvg !== "") {
@@ -447,6 +446,12 @@
               children: icon });
           iconContent = TheGraph.factories.node.createNodeIconText.call(this, iconOptions);
       }
+
+      var innerContent = TheGraph.factories.node.createNodeIconText.call(this, {
+          x: this.props.width / 2,
+          y: this.props.height / 2,
+          children: this.props.title
+      });
 
       var backgroundRectOptions = TheGraph.merge(TheGraph.config.node.background, { width: this.props.width, height: this.props.height + 25 });
       var backgroundRect = TheGraph.factories.node.createNodeBackgroundRect.call(this, backgroundRectOptions);
@@ -487,7 +492,8 @@
         backgroundRect,
         borderRect,
         innerRect,
-        iconContent,
+        //iconContent,
+        innerContent,
         inportsGroup,
         outportsGroup,
         labelGroup,

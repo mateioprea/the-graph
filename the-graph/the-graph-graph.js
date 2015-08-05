@@ -371,6 +371,11 @@
       this.updatedIcons[nodeId] = icon;
       this.markDirty();
     },
+    updatedText: {},
+    updateText: function(nodeId, text) {
+        this.updatedText[nodeId] = text;
+        this.markDirty();
+    },
     dirty: false,
     libraryDirty: false,
     markDirty: function (event) {
@@ -417,7 +422,9 @@
       }
 
       // Nodes
+        console.log('TheGraph.config:', TheGraph.config);
       var nodes = graph.nodes.map(function (node) {
+
         var componentInfo = self.getComponentInfo(node.component);
         var key = node.id;
         if (!node.metadata) {
@@ -458,6 +465,10 @@
           selectedIds.push(key);
         }
 
+        var title = componentInfo.title;
+        if(self.updatedText[key]) {
+          title = self.updatedText[key];
+        }
         var nodeOptions = {
           key: key,
           nodeID: key,
@@ -471,6 +482,7 @@
           graphView: self,
           graph: graph,
           node: node,
+          title: title,
           icon: icon,
           iconsvg: iconsvg,
           ports: self.getPorts(graph, key, node.component),
